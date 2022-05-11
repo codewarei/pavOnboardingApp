@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constant/constants.dart';
+
+class AppHeaders {
+//Use these headers if you don't need to login
+  static unAuthenticatedHeaders() {
+    return {
+      'Content-type': 'application/json'
+    };
+  }
+
+//Use these headers after you've logged in
+  static authenticatedHeaders() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+     var _token = pref.getString(Constants.USER_TOKEN); //TOKEN that was set on user login.
+    return {
+      'Content-type': 'application/json',
+       'authorization': 'Bearer $_token'
+    };
+  }
+
+}
