@@ -65,6 +65,9 @@ Gradient grobaggradient = LinearGradient(
 
 // CryptoTech //
 
+Color orangeColors = Color(0xffF5591F);
+Color orangeLightColors = Color(0xffF2861E);
+
 final Color cryptocolor1 = Color(0xfff4fdfe);
 final Color cryptocolor2 = Color(0xff00e2d3);
 final Color cryptocolor3 = Color(0xff00b3d5);

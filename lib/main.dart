@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inspirze_onboarding_app/ui/admin/views/test.dart';
 import 'package:inspirze_onboarding_app/ui/screens/animated_intro.dart';
 import 'package:inspirze_onboarding_app/ui/screens/register_screen.dart';
 import 'package:inspirze_onboarding_app/ui/screens/slides_screen.dart';
@@ -19,13 +20,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Inspirze OnBoarding',
+      title: 'PAV OnBoarding',
       theme: ThemeData(
+        backgroundColor: Colors.white70,
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),
       ),
-      home: const CryptoTechSingleLogin(),
+      home:  const CryptoTechSingleLogin(),
     );
   }
 }

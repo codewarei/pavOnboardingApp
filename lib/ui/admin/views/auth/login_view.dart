@@ -1,24 +1,26 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:inspirze_onboarding_app/ui/admin/views/auth/login_view.dart';
+import 'package:inspirze_onboarding_app/ui/admin/views/dashboard/home_view.dart';
 import 'package:inspirze_onboarding_app/ui/screens/slides_screen.dart';
-
-import '../../core/services/user_services.dart';
-import '../shared/const_color.dart';
-import '../widgets/snackBar_widget.dart';
-import '../widgets/video_widget.dart';
 import 'package:http/http.dart' as http;
 
-class CryptoTechSingleLogin extends StatefulWidget {
-  const CryptoTechSingleLogin({Key? key}) : super(key: key);
+import '../../../../core/constant/constants.dart';
+import '../../../../core/providers/shared_pref.dart';
+import '../../../../core/services/user_services.dart';
+import '../../../screens/register_screen.dart';
+import '../../../shared/const_color.dart';
+import '../../../widgets/snackBar_widget.dart';
+
+
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({Key? key}) : super(key: key);
 
   @override
-  _CryptoTechSingleLoginState createState() => _CryptoTechSingleLoginState();
+  _AdminLoginState createState() => _AdminLoginState();
 }
 
-class _CryptoTechSingleLoginState extends State<CryptoTechSingleLogin> {
+class _AdminLoginState extends State<AdminLogin> {
+
 
 
 
@@ -41,7 +43,7 @@ class _CryptoTechSingleLoginState extends State<CryptoTechSingleLogin> {
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminLogin()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const CryptoTechSingleLogin()));
         },
         child: Container(
           height: 55,
@@ -51,7 +53,7 @@ class _CryptoTechSingleLoginState extends State<CryptoTechSingleLogin> {
               top: BorderSide(width: 1.0, color: Colors.white.withOpacity(0.5)),
             ),
           ),
-          child: Center(child: Text("Login as Admin", style: Theme.of(context).textTheme.subtitle1?.merge(TextStyle(color: cryptocolor1, letterSpacing: 1.65, fontWeight: FontWeight.w400)))),
+          child: Center(child: Text("Login as Employee", style: Theme.of(context).textTheme.subtitle1?.merge(TextStyle(color: cryptocolor1, letterSpacing: 1.65, fontWeight: FontWeight.w400)))),
         ),
       ),
     );
@@ -70,8 +72,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final globalKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController firstName = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   bool _obscureText = true;
   bool isLoading = false, isdialogloading = false;
@@ -98,10 +100,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                 child: Text(
                   'Welcome to PAV Connect',
                   style:     TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.35,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 25
+                      color: Colors.white,
+                      letterSpacing: 1.35,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 25
                   ),
                 ),
               ),
@@ -109,9 +111,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                 child: Text(
                   'And the journey to Belong and Become',
                   style:     TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.35,
-                    fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      letterSpacing: 1.35,
+                      fontWeight: FontWeight.w400,
                       fontSize: 15
                   ),
                 ),
@@ -162,7 +164,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             cursorColor: Colors.white,
             decoration: InputDecoration(
               hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-              hintText: 'Enter First Name',
+              hintText: 'Enter email',
               focusedBorder: outlineborderedittext,
               disabledBorder: outlineborderedittext,
               enabledBorder: outlineborderedittext,
@@ -179,57 +181,20 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
             // keyboardType: TextInputType.emailAddress,
             // validator: (val) => Constant.validateEmail(val),
-            controller: firstName,
+            controller: email,
           ),
           const SizedBox(
             height: 20,
           ),
-           Container(alignment: Alignment.centerLeft, child: Text("Surname", style: Theme.of(context).textTheme.subtitle1?.merge(TextStyle(color: Colors.white)))),
-          TextFormField(
 
-            // controller: edtpsw,
-            // validator: (val) => val.isEmpty ? '${StringsRes.enter_password}' : null,
-            style: const TextStyle(color: Colors.white),
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
-              hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-              hintText: 'Enter Surname',
-              focusedBorder: outlineborderedittext,
-              disabledBorder: outlineborderedittext,
-              enabledBorder: outlineborderedittext,
-              errorBorder: outlineborderedittext,
-              hoverColor: Colors.white,
-              fillColor: Colors.white,
-              focusColor: Colors.white,
-              //isDense: true,
-              prefixIcon: const Icon(
-                Icons.person,
-                color: Colors.yellowAccent,
-              ),
-              // suffixIcon: GestureDetector(
-              //   onTap: () {
-              //     // setState(() {
-              //     //   _obscureText = !_obscureText;
-              //     // });
-              //   },
-              //   child: Icon(
-              //     _obscureText ? Icons.visibility : Icons.visibility_off,
-              //     color: Colors.white,
-              //   ),
-              // ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(alignment: Alignment.centerLeft, child: Text("Phone Number", style: Theme.of(context).textTheme.subtitle1?.merge(TextStyle(color: Colors.white)))),
+          Container(alignment: Alignment.centerLeft, child: Text("Password", style: Theme.of(context).textTheme.subtitle1?.merge(TextStyle(color: Colors.white)))),
 
           TextFormField(
             style: const TextStyle(color: Colors.white),
             cursorColor: Colors.white,
             decoration: InputDecoration(
               hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-              hintText: 'Phone Number',
+              hintText: 'Password',
               focusedBorder: outlineborderedittext,
               disabledBorder: outlineborderedittext,
               enabledBorder: outlineborderedittext,
@@ -246,55 +211,148 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
             // keyboardType: TextInputType.emailAddress,
             // validator: (val) => Constant.validateEmail(val),
-            controller: phoneNumber,
+            controller: password,
           ),
           GestureDetector(
             onTap: () async {
 
+
+                if (email.text == "" ||
+                    password.text == "") {
+                  showSnackBar(
+                      context: context,
+                      message:
+                      "Enter Your email & password!!!",
+                      color: Colors.red);
+                } else {
+                  http.Response? res = await UserService()
+                      .adminLogin(
+                      email.text,
+                      password.text,
+                      context);
+
+                  if (res == null) {
+                    showSnackBar(
+                        context: context,
+                        message: "Error occurred!!!",
+                        color: Colors.red);
+                  } else {
+                    var results = jsonDecode(res.body);
+                    print(results);
+                    if (res.statusCode != 200) {
+                      showSnackBar(
+                          context: context,
+                          message: 'Please contact service',
+
+                          color: Colors.red);
+                    } else {
+                      // SharedPreferences pref =
+                      // await SharedPreferences
+                      //     .getInstance();
+                      // pref.setString(Constants.USER_TOKEN,
+                      //     results['results']);
+                      print(results['token']);
+                      await AppCache.set(Constants.USER_TOKEN, results['token']);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const HomeView()));
+                    }
+                  }
+                }
+
+                // if (_formKey.currentState!.validate()) {
+                //   var response;
+                //
+                //   http.Response? res = await UserService()
+                //       .signIn(email.text,
+                //       password.text);
+                //   SharedPreferences pref =
+                //       await SharedPreferences.getInstance();
+                //
+                //   if (res!.statusCode == 200) {
+                //     setState(() {
+                //       var data = json.decode(res.body);
+                //       var token = data['token'];
+                //
+                //       pref.setString('authorization', token);
+                //       Navigator.of(context).push(
+                //           MaterialPageRoute(
+                //               builder: (context) =>
+                //                   HomeScreen()));
+                //     });
+                //   } else {
+                //     setState(() {
+                //       var loginMessage =
+                //       json.decode(res.body);
+                //       print(loginMessage['message']);
+                //
+                //       Scaffold.of(context)
+                //           .showSnackBar(SnackBar(
+                //           content: Text(
+                //             loginMessage['message'],
+                //           )));
+                //     });
+                //   }
+                // }
+                // submit();
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => HomeScreen()),
+                // );
+
+
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //         const HomeView()));
+
               //After successful login we will redirect to profile page. Let's create profile page now
 
               //we can change the validation later
-              if (firstName.text == "" ||
-                  phoneNumber.text == "") {
-                showSnackBar(
-                    context: context,
-                    message:
-                    "Enter Your Name, Surname & phone number!!!",
-                    color: Colors.red);
-              } else {
-                http.Response? res = await UserService()
-                    .signIn(
-                    firstName.text,
-                    phoneNumber.text,
-                    context);
-                if (res == null) {
-                  showSnackBar(
-                      context: context,
-                      message: "Error occurred!!!",
-                      color: Colors.red);
-                } else {
-                  var results = jsonDecode(res.body);
-                  //print(results);
-                  if (res.statusCode != 200) {
-                    showSnackBar(
-                        context: context,
-                        message: 'Please contact service',
-
-                        color: Colors.red);
-                  } else {
-                    // SharedPreferences pref =
-                    // await SharedPreferences
-                    //     .getInstance();
-                    // pref.setString(Constants.USER_TOKEN,
-                    //     results['results']);
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                             IntroSlider()));
-                  }
-                }
-              }
+              // if (email.text == "" ||
+              //     password.text == "") {
+              //   showSnackBar(
+              //       context: context,
+              //       message:
+              //       "Enter Your Name, Surname & phone number!!!",
+              //       color: Colors.red);
+              // } else {
+              //   http.Response? res = await UserService()
+              //       .signIn(
+              //       email.text,
+              //       password.text,
+              //       context);
+              //   if (res == null) {
+              //     showSnackBar(
+              //         context: context,
+              //         message: "Error occurred!!!",
+              //         color: Colors.red);
+              //   } else {
+              //     var results = jsonDecode(res.body);
+              //     //print(results);
+              //     if (res.statusCode != 200) {
+              //       showSnackBar(
+              //           context: context,
+              //           message: 'Please contact service',
+              //
+              //           color: Colors.red);
+              //     } else {
+              //       // SharedPreferences pref =
+              //       // await SharedPreferences
+              //       //     .getInstance();
+              //       // pref.setString(Constants.USER_TOKEN,
+              //       //     results['results']);
+              //       Navigator.pushReplacement(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) =>
+              //                   const HomeView()));
+              //     }
+              //   }
+              // }
 
               /**if (formKey.currentState!.validate()) {
                   print(emailController.text);

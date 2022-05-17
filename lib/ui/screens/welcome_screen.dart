@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/services/user.services.dart';
+import '../../core/services/user_services.dart';
 import '../widgets/snackBar_widget.dart';
 import '../widgets/video_widget.dart';
 import 'animated_intro.dart';
