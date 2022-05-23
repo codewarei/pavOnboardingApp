@@ -6,7 +6,8 @@ class AppHeaders {
 //Use these headers if you don't need to login
   static unAuthenticatedHeaders() {
     return {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'Accept': 'application/json'
     };
   }
 

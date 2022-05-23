@@ -29,15 +29,33 @@ class StatelessWidgetDemo extends StatelessWidget {
           // return object of type Dialog
           return AlertDialog(
             elevation: 10,
-            content: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/pop.jpg',
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              ],
+            content: Container(
+              height: 1000,
+              width: 800,
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/pa.jpg',
+                      height: 1000,
+                    // width: 800,
+                    fit: BoxFit.cover,
+                  ),
+                  const Text('This is a Dummy\n Text for the user\n\nto see for now Ad\nto see for now Ad\n\n\nto see for now Ad\nto see for now Ad\nto see for now Ad', style: TextStyle(color: Colors.white, fontSize: 35),),
+                  Positioned(
+                    top: 1,
+                    right: 20,
+                    child: IconButton(
+                      color: Colors.white,
+                      icon: const Icon(Icons.clear),
+                      tooltip: 'Close the AD',
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

@@ -11,16 +11,28 @@ class AdService {
 
   Future<List<Ad>> getAds() async {
     Response res = await http
-        .get(Uri.parse(apiUrl), headers: AppHeaders.authenticatedHeaders());
-
-
+        .get(Uri.parse(apiUrl), headers: AppHeaders.unAuthenticatedHeaders());
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
       List<Ad> ads = body.map((dynamic item) => Ad.fromJson(item)).toList();
+      print(ads);
       return ads;
     } else {
       throw "Failed to load ads list";
+    }
+  }
+
+  Future<List<Ad>> fetchAds() async {
+    final response =
+    await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+
+      return parsed.map<Ad>((json) => Ad.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load album');
     }
   }
 
@@ -30,7 +42,7 @@ class AdService {
     if (response.statusCode == 200) {
       return Ad.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load a case');
+      throw Exception('Failed to load a ad');
     }
   }
 
